@@ -7,13 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Data\backtest.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CsvHelper" Version="33.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\js\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Data\backtest.json" />
   </ItemGroup>
 
 </Project>

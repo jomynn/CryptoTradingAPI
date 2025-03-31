@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backtest Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <h2>BTC/USDT Backtest Chart</h2>
+    <canvas id="backtestChart" width="800" height="400"></canvas>
+
+    <script>
+        async function fetchBacktestData() {
+            const response = await fetch('/api/trading/backtest');
+            const data = await response.json();
+
+            const labels = data.map(entry => entry.datetime); // Time Labels
+            const balanceData = data.map(entry => entry.balance); // Balance
+            const profitData = data.map(entry => entry.profit); // Profit
+
+            const ctx = document.getElementById('backtestChart').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Balance ($)',
+                            data: balanceData,
+                            borderColor: 'blue',
+                            borderWidth: 2,
+                            fill: false
+                        },
+                        {
+                            label: 'Profit ($)',
+                            data: profitData,
+                            borderColor: 'green',
+                            borderWidth: 2,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: { title: { display: true, text: 'Datetime' } },
+                        y: { title: { display: true, text: 'USD' } }
+                    }
+                }
+            });
+        }
+
+        fetchBacktestData();
+    </script>
+
+</body>
+</html>
